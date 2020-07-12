@@ -1,0 +1,29 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    {{ title }} | Edit
+{% endblock %}
+
+{% block body %}
+    {{message}}
+
+    <form action="{% url 'post_edit' title %}" method="POST">
+    {% csrf_token %}
+    <table>
+    <tr>
+        <th><label for="title">Title:</label></th>
+        <td><input type="text" name="title" cols="60" required disabled value="{{title}}" id="title"></td>
+    </tr>
+    <tr>
+        <th><label for="description">Description:</label></th>
+        <td>
+            <textarea name="description" cols="120" rows="10" required id="id_content">{{ Description | linebreaksbr}}</textarea>
+        </td>
+    </tr>
+    </table>
+    <input type="submit" value="Edit" class="btn-lg btn-default">
+    </form>
+
+
+
+{% endblock %}

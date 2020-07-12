@@ -5,10 +5,22 @@
     {{ title }}
 {% endblock %}
 
-
 {% block body %}
-    {{ page | safe }}
 
+<div class="container">
+    <div class="row">
+        <div class="col-9"></div>
+        <div class="col-3">
+            <a href="{% url 'post_edit' title %}">Edit this page</a>
+        </div>
+    </div>
     
+</div>
+
+<div class="container">
+    <p>{{ body | safe }} </p>
+    
+</div>
+       
 
 {% endblock %}
