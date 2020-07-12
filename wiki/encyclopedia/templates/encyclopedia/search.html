@@ -1,33 +1,34 @@
 {% extends "encyclopedia/layout.html" %}
 
 {% block title %}
-    Search 
+    Search '{{ query }}'
 {% endblock %}
 
 {% block body %}
 <div class="container">
     <div class="row">
-        <div>
-            <h2>No. of pages found = {{ page_count }}</h2>
+        <div class="col-4">
+            <p><i>The search result for: {{ query }}</i></p>
         </div>
-        <div class="col-8">
-            <h3>The search result for: {{ search_page }}</h3>
-        </div>
-    </div>
-    <div class="row">
-        <div>
-            <h3> Following pages were found: </h3>
-        </div>
-        <div>
-            <ul>
-                {% for item in page_names %}
-                    <li><a href="{% url 'pages' entry %}">{{ item }}</a></li>
-                {% empty %}
-                    No pages found.
-                {% endfor %}
-            </ul>
+        <div class="col-4"></div>
+        <div class="col-4">
+            <p><i>No. of pages found = {{ count }}</i> </p>
         </div>
     </div>
 </div>
-{{ page | safe }}
+<div class="container">
+    <div>
+        <br>
+        <h2>Following pages found: </h2>
+        <br>
+        <ul>
+            {% for entry in entries %}
+                <li><a href="{% url 'pages' entry %}"><h3>{{ entry }}</h3></a></li>
+            {% empty %}
+                No pages found.
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{{ page | safe}}
 {% endblock %}

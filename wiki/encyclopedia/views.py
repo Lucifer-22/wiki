@@ -20,7 +20,7 @@ def index(request):
         "entries": util.list_entries()
     })
 
-#
+
 def pages(request, name):
     page_name = util.get_entry(name)
         #page_name returns the name of the page is exists in the entry or NONE.
@@ -78,17 +78,18 @@ def random(request):
     return HttpResponseRedirect(reverse("pages", kwargs={'name': random_title}))
 
 
-
 def search(request):
-    searchItem = request.POST["item"]
-    entries = util.list_entries()
-    if searchItem in entries:
-        return HttpResponseRedirect("wiki/"+searchItem)
+    all_entries = util.list_entries()
+    search_title = request.POST['title']
+    if search_title in all_entries:
+        return HttpResponseRedirect(reverse('pages', kwargs={'name': search_title}))
     else:
-        list = []
-        for article in entries:
-            if searchItem in article:
-                list.append(article)
-        return render(request, "encyclopedia/index.html", {
-            "entries": list
+        matching_list = []
+        for entry in all_entries:
+            if search_title.lower() in entry.lower():
+                matching_list.append(entry)
+        return render(request, "encyclopedia/search.html", {
+            "entries": matching_list,
+            "query": search_title,
+            "count": len(matching_list)
         })
